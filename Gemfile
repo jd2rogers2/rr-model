@@ -5,8 +5,10 @@ ruby '2.3.3'
 
 # add by me
 gem 'foreman', '~> 0.82.0'
-# gem 'bcrypt'
+gem 'bcrypt'
 gem 'pry'
+# gem 'active_model_serializers', '0.9.3'
+# couldn't get above to work :(
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'

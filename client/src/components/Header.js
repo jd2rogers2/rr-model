@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Header extends Component {
-  logOut() {}
+  constructor(props) {
+    super(props);
+  }
 
   render(){
     return (
@@ -12,7 +14,11 @@ class Header extends Component {
           <li><Link to="/shop">Shop</Link></li>
           <li><Link to="/profile">Profile</Link></li>
           <li><Link to="/cart">Cart</Link></li>
-          <li><button onClick={this.logOut}>Log Out</button></li>
+          {this.props.loggedIn ? (
+            <li><button onClick={this.props.logOut}>Log Out</button></li>
+          ) : (
+            <li><Link to="/login">Log In</Link></li>
+          )}
         </ul>
       </div>
     )

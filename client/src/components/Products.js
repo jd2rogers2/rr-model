@@ -38,8 +38,7 @@ class Products extends Component {
       },
       body: orderedProduct
     }).then(response => response.json()).then(data => {
-      debugger;
-      // this.setState({products: data});
+      console.log(`${data.name} added with cart_id ${data.cart_id}`);
     });
   }
 
@@ -52,7 +51,7 @@ class Products extends Component {
               <img src={product.image} alt={product.name} />
               <p>name: {product.name}</p>
               <p>price: {product.price}</p>
-              <button onClick={() => this.addToCart(product)}>Add to Cart</button>
+              {this.props.loggedIn && (<button onClick={() => this.addToCart(product)}>Add to Cart</button>)}
             </li>
           );
         })}

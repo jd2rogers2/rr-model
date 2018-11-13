@@ -1,7 +1,6 @@
 
 sessions
 profile page
-cart page
 
 nice ui
 change routes for api convention

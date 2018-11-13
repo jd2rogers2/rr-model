@@ -1,3 +1,5 @@
+require 'pry'
+
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :update, :destroy]
 
@@ -10,8 +12,7 @@ class CartsController < ApplicationController
 
   # GET /carts/1
   def show
-    render json: @cart.to_json(:include => :products)
-    # need to render products too
+    render json: @cart.to_json(:include => :ordered_products)
   end
 
   # POST /carts
