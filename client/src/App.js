@@ -29,7 +29,20 @@ class App extends Component {
 
   logOut() {}
 
-  logIn() {}
+  logIn = (username, password) => {
+    const user = JSON.stringify({username, password});
+
+    fetch('/sessions', {
+        accept: 'application/json',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: user
+    }).then(response => response.json()).then(data => {
+      this.setState({user: data});
+    });
+  }
 
 // need catch all route to products
   render() {

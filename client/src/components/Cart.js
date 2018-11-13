@@ -19,7 +19,7 @@ class Cart extends Component {
         'Content-Type': 'application/json'
       }
     }).then(response => response.json()).then(data => {
-      this.setState({orderedProducts: data.ordered_products});
+      this.setState({orderedProducts: data.ordered_products || []});
     });
   }
 
@@ -48,6 +48,10 @@ class Cart extends Component {
             );
           })}
         </ul>
+        <p>total price: {this.state.orderedProducts.reduce((acc, current) => {
+          return acc + current.price;
+        }, 0)}</p>
+        {!this.state.orderedProducts.length && (<p>Your cart is empty.</p>)}
       </div>
     )
   }

@@ -1,6 +1,6 @@
 
-sessions
-profile page
+log in/sessions
+sign up
 
 nice ui
 change routes for api convention
