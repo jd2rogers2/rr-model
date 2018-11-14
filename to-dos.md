@@ -1,5 +1,6 @@
 
-log in/sessions
+add to cart broken
+probably something to do with how we set the cart
 sign up
 
 nice ui
