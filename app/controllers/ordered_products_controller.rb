@@ -16,8 +16,6 @@ class OrderedProductsController < ApplicationController
   # POST /ordered_products
   def create
     @ordered_product = OrderedProduct.new(ordered_product_params)
-    @ordered_product.cart_id = Cart.get_current(current_user.id).id
-
     if @ordered_product.save
       render json: @ordered_product, status: :created, location: @ordered_product
     else
@@ -37,6 +35,7 @@ class OrderedProductsController < ApplicationController
   # DELETE /ordered_products/1
   def destroy
     @ordered_product.destroy
+    render json: @ordered_product
   end
 
   private
@@ -47,6 +46,6 @@ class OrderedProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def ordered_product_params
-      params.require(:ordered_product).permit(:name, :price, :image)
+      params.require(:ordered_product).permit(:name, :price, :image, :cart_id)
     end
 end

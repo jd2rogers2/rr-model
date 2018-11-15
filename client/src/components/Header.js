@@ -17,7 +17,7 @@ class Header extends Component {
           {this.props.loggedIn ? (
             <li><button onClick={this.props.logOut}>Log Out</button></li>
           ) : (
-            <li><Link to="/login">Log In</Link></li>
+            <li><Link to="/login">Log In/Sign Up</Link></li>
           )}
         </ul>
       </div>

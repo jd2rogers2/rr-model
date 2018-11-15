@@ -43,7 +43,7 @@ class CartsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.get_current(current_user.id)
+      @cart = Cart.find_by_id(params[:id])
     end
 
     # Only allow a trusted parameter "white list" through.

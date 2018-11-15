@@ -27,8 +27,8 @@ class Products extends Component {
     // actually that can be abstracted to  every page, can it be done server side?
   }
 
-  addToCart = product => {
-    const orderedProduct = JSON.stringify({ordered_product: {...product} });
+  addToCart = ({name, price, image}) => {
+    const orderedProduct = JSON.stringify({ ordered_product: {name, price, image, cart_id: this.props.cartId} });
 
     fetch('/ordered_products', {
       accept: 'application/json',

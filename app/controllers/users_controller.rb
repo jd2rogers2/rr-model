@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update, :destroy]
 
-  def current
-    render json: current_user
+  def login
+    @user = User.find_by(username: params[:username])
+    authenticated = @user.try(:authenticate, params[:password])
+    if authenticated
+      render json: @user.to_json(:include => :current_cart)
+    else
+      render json: {}
+    end
   end
 
   # GET /users
@@ -20,9 +26,11 @@ class UsersController < ApplicationController
   # POST /users
   def create
     @user = User.new(user_params)
+    @user.cart = Cart.create(user_id: @user.id)
 
     if @user.save
-      render json: @user, status: :created, location: @user
+      Cart.create(user_id: @user.id)
+      render json: @user.to_json(:include => :current_cart)
     else
       render json: @user.errors, status: :unprocessable_entity
     end

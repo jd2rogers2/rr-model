@@ -11,8 +11,11 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    // fetch current user's ordered ordered_products
-    fetch('/carts/1', {
+    if (!this.props.loggedIn) {
+      return;
+    }
+
+    fetch(`/carts/${this.props.cartId}`, {
       accept: 'application/json',
       method: 'GET',
       headers: {
@@ -23,7 +26,18 @@ class Cart extends Component {
     });
   }
 
-  removeFromCart(product) {}
+  removeFromCart = productId => {
+    fetch(`/ordered_products/${productId}`, {
+      accept: 'application/json',
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => response.json()).then(data => {
+      console.log(`${data.name} removed from cart with cart_id ${data.cart_id}`);
+      this.setState(prevState => ({...prevState, orderedProducts: prevState.orderedProducts.filter(prod => prod.id !== data.id)}));
+    });
+  }
 
   render(){
     return !this.props.loggedIn ? (
@@ -43,7 +57,7 @@ class Cart extends Component {
                 <img src={product.image} alt={product.name} />
                 <p>name: {product.name}</p>
                 <p>price: {product.price}</p>
-                <button onClick={() => this.removeFromCart(product)}>Remove from Cart</button>
+                <button onClick={() => this.removeFromCart(product.id)}>Remove from Cart</button>
               </li>
             );
           })}
