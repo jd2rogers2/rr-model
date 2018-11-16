@@ -8,6 +8,7 @@ import User from './components/User';
 import Cart from './components/Cart';
 import LogIn from './components/LogIn';
 import { isEmpty } from 'lodash';
+import {Button} from 'semantic-ui-react';
 
 class App extends Component {
   constructor(props) {
@@ -69,6 +70,7 @@ class App extends Component {
             </Switch>
           </div>
         </BrowserRouter>
+        <Button primary >HI!</Button>
         <Footer />
       </div>
     );
