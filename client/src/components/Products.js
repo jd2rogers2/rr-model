@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+// import { Header as SemHeader, Segment, Button, Icon, Image, Container, Grid } from 'semantic-ui-react'
+import { Grid, Image, Message, Segment, Placeholder } from 'semantic-ui-react'
 
 class Products extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: []
+      products: [],
+      loading: true
     };
   }
 
@@ -24,7 +27,12 @@ class Products extends Component {
     });
     // get user's profile pages
     // if not logged in show login page
-    // actually that can be abstracted to  every page, can it be done server side?
+    // actually that can be abstracted to every page, can it be done server side?
+
+    // until we can find a way to tell if image is loaded
+    setTimeout(() => {
+      this.setState({ loading: false })
+    }, 3000)
   }
 
   addToCart = ({name, price, image}) => {
@@ -42,20 +50,47 @@ class Products extends Component {
     });
   }
 
+  handleImageLoaded = () => {
+    this.setState({loading: false});
+  }
+
   render(){
+    const { loading } = this.state;
     return (
-      <ul>
-        {this.state.products.map(product => {
-          return (
-            <li key={product.id}>
-              <img src={product.image} alt={product.name} />
-              <p>name: {product.name}</p>
-              <p>price: {product.price}</p>
-              {this.props.loggedIn && (<button onClick={() => this.addToCart(product)}>Add to Cart</button>)}
-            </li>
-          );
-        })}
-      </ul>
+      <Segment inverted color='olive' secondary>
+        <Grid textAlign='center' columns={3}>
+          {this.state.products.map(product => {
+            return (
+              <div key={product.id}>
+                <Grid.Column>
+                  {loading ? (
+                    <Placeholder style={{ height: 298, width: 298 }}>
+                      <Placeholder.Image />
+                    </Placeholder>
+                  ) : (
+                    <Image
+                      src={product.image}
+                      centered
+                      size='medium'
+                      bordered
+                      alt={product.name}
+                    />
+                  )}
+                </Grid.Column>
+                <Message color='olive' attached='bottom'>
+                  <Message.Header>{product.name}</Message.Header>
+                  <p>${product.price}</p>
+                  {this.props.loggedIn ? (
+                    <button onClick={() => this.addToCart(product)}>Add to Cart</button>
+                  ) : (
+                    <span>log in to add to cart</span>
+                  )}
+                </Message>
+              </div>
+            );
+          })}
+        </Grid>
+      </Segment>
     )
   }
 }
