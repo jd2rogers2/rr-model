@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { Header as SemHeader, Segment, Button, Icon, Image, Container, Grid } from 'semantic-ui-react'
-import { Grid, Image, Message, Segment, Placeholder } from 'semantic-ui-react'
+import { Grid, Image, Message, Placeholder } from 'semantic-ui-react'
 
 class Products extends Component {
   constructor(props) {
@@ -57,11 +57,11 @@ class Products extends Component {
   render(){
     const { loading } = this.state;
     return (
-      <Segment inverted color='olive' secondary>
-        <Grid textAlign='center' columns={3}>
+      <div style={{display: 'inline-block', backgroundColor: '#F4F2E9', textAlign: 'center', position: 'relative', top: '15px'}}>
+        <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
           {this.state.products.map(product => {
             return (
-              <div key={product.id}>
+              <div key={product.id} style={{paddingBottom: '10px'}}>
                 <Grid.Column>
                   {loading ? (
                     <Placeholder style={{ height: 298, width: 298 }}>
@@ -77,7 +77,7 @@ class Products extends Component {
                     />
                   )}
                 </Grid.Column>
-                <Message color='olive' attached='bottom'>
+                <Message color='grey' attached='bottom'>
                   <Message.Header>{product.name}</Message.Header>
                   <p>${product.price}</p>
                   {this.props.loggedIn ? (
@@ -90,7 +90,7 @@ class Products extends Component {
             );
           })}
         </Grid>
-      </Segment>
+      </div>
     )
   }
 }

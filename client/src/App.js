@@ -7,6 +7,7 @@ import Products from './components/Products';
 import User from './components/User';
 import Cart from './components/Cart';
 import LogIn from './components/LogIn';
+import Home from './components/Home';
 import { isEmpty } from 'lodash';
 import 'semantic-ui-css/semantic.min.css';
 
@@ -56,17 +57,17 @@ class App extends Component {
 // need catch all route to products
   render() {
     const loggedIn = !isEmpty(this.state.user);
-
     return (
       <div>
         <BrowserRouter>
-          <div>
+          <div style={{textAlign: 'center'}}>
             <Header loggedIn={loggedIn} logOut={this.logOut} />
             <Switch>
               <Route path="/shop" render={props => <Products {...props} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
               <Route path="/profile" render={props => <User {...props} username={this.state.user.username} loggedIn={loggedIn} />} />
               <Route path="/cart" render={props => <Cart {...props} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
               <Route path="/login" render={props => <LogIn {...props} loggedIn={loggedIn} logIn={this.logIn} signUp={this.signUp} />} />
+              <Route path="/" render={props => <Home {...props} loggedIn={loggedIn} logIn={this.logIn} />} />
             </Switch>
           </div>
         </BrowserRouter>

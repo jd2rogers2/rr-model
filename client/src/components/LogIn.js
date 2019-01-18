@@ -37,7 +37,7 @@ class LogIn extends Component {
     this.props.logIn(this.state.logInUsername, this.state.logInPassword).then(response => {
       if (isEmpty(response)) {
         this.setState({
-          showUnsuccessful: true ,
+          showUnsuccessful: true,
           logInUsername: '',
           logInPassword: ''
         });
