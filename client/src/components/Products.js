@@ -6,25 +6,11 @@ class Products extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: [],
       loading: true
     };
   }
 
   componentDidMount() {
-    if (this.state.products.length > 0) {
-      return;
-    }
-    // fetch('/api/v1/products', {
-    fetch('/products', {
-      accept: 'application/json',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json()).then(data => {
-      this.setState({products: data});
-    });
     // get user's profile pages
     // if not logged in show login page
     // actually that can be abstracted to every page, can it be done server side?
@@ -56,10 +42,10 @@ class Products extends Component {
 
   render(){
     const { loading } = this.state;
-    return (
+    return this.props.products.length > 0 ? (
       <div style={{display: 'inline-block', backgroundColor: '#F4F2E9', textAlign: 'center', position: 'relative', top: '15px'}}>
         <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
-          {this.state.products.map(product => {
+          {this.props.products.map(product => {
             return (
               <div key={product.id} style={{paddingBottom: '10px'}}>
                 <Grid.Column>
@@ -91,6 +77,8 @@ class Products extends Component {
           })}
         </Grid>
       </div>
+    ) : (
+      <p>no products found</p>
     )
   }
 }

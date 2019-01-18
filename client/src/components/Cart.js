@@ -22,7 +22,7 @@ class Cart extends Component {
         'Content-Type': 'application/json'
       }
     }).then(response => response.json()).then(data => {
-      this.setState({orderedProducts: data.ordered_products || []});
+      this.setState({orderedProducts: data ? data.ordered_products : []});
     });
   }
 
