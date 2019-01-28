@@ -49,7 +49,7 @@ class LogIn extends Component {
     return this.props.loggedIn ? (
       <Redirect
         to={{
-          pathname: "/shop",
+          pathname: "/home",
           state: { from: this.props.location }
         }}
       />

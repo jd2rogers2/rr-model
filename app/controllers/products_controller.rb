@@ -9,7 +9,7 @@ class ProductsController < ApplicationController
   end
 
   def search
-    @products = Product.filter_by_name(product_params[:search_text])
+    @products = Product.filter_by_name(params[:user_input])
 
     render json: @products
   end
@@ -52,6 +52,6 @@ class ProductsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def product_params
-      params.require(:product).permit(:name, :price, :image, :search_text)
+      params.require(:product).permit(:name, :price, :image)
     end
 end

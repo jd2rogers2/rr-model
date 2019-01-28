@@ -23,25 +23,34 @@ class App extends Component {
   componentDidMount() {
     // what to do if we've searched/filtered and got nothing?
     if (this.state.products.length === 0) {
-      this.fetchProducts();
+      this.getAllProducts();
     }
   }
 
-  fetchProducts = searchText => {
+  getAllProducts = () => {
     // fetch('/api/v1/products', {
-    let data = {
+    fetch('/products', {
       accept: 'application/json',
-      method: searchText ? 'POST' : 'GET',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
-    };
-    if (searchText) {
-      data.body = {searchText};
-    }
-    fetch('/products',{
-      ...data
     }).then(response => response.json()).then(data => {
+      this.setState({products: data});
+    });
+  }
+
+  getFilteredProducts = userInput => {
+    const keyword = JSON.stringify({user_input: userInput});
+    fetch('/products/search',{
+      accept: 'application/json',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: keyword
+    }).then(response => response.json()).then(data => {
+      // if (data.length) { to do
       this.setState({products: data});
     });
   }
@@ -87,13 +96,12 @@ class App extends Component {
       <div>
         <BrowserRouter>
           <div style={{textAlign: 'center'}}>
-            <Header loggedIn={loggedIn} logOut={this.logOut} fetchProducts={this.fetchProducts} />
+            <Header getFilteredProducts={this.getFilteredProducts} />
             <Switch>
               <Route path="/shop" render={props => <Products {...props} products={this.state.products} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
               <Route path="/profile" render={props => <User {...props} username={this.state.user.username} loggedIn={loggedIn} />} />
               <Route path="/cart" render={props => <Cart {...props} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
-              <Route path="/login" render={props => <LogIn {...props} loggedIn={loggedIn} logIn={this.logIn} signUp={this.signUp} />} />
-              <Route path="/" render={props => <Home {...props} loggedIn={loggedIn} logIn={this.logIn} />} />
+              <Route path="/" render={props => <Home {...props} username={this.state.user.username} logOut={this.logOut} loggedIn={loggedIn} logIn={this.logIn} signUp={this.signUp} />} />
             </Switch>
           </div>
         </BrowserRouter>

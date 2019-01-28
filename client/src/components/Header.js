@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { Header as SemHeader, Button, Icon, Image, Container, Grid, Menu, Input, Form } from 'semantic-ui-react'
+import { withRouter } from 'react-router-dom';
+import { Header as SemHeader, Icon, Image, Container, Menu, Form } from 'semantic-ui-react'
 
 class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
       activeItem: '/',
-      searchText: ''
+      userInput: ''
     };
   }
 
@@ -17,11 +17,9 @@ class Header extends Component {
   }
 
   handleSearchChange = event => {
-    this.setState({ searchText: event.target.value });
+    this.setState({ userInput: event.target.value });
   }
 
-//<Redirect push to="/sample" />
-// maybe replace link with above if needed
   render(){
     const { activeItem } = this.state;
     return (
@@ -52,19 +50,10 @@ class Header extends Component {
 
             <Menu.Menu position='right'>
               <Menu.Item>
-                <Form onSubmit={() => this.props.fetchProducts(this.state.searchText)}>
+                <Form onSubmit={() => this.props.getFilteredProducts(this.state.userInput)}>
                   <Form.Input onChange={this.handleSearchChange} action={{ type: 'submit', icon: 'search' }} placeholder='Search...' />
                 </Form>
               </Menu.Item>
-              {this.props.loggedIn ? (
-                <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.props.logOut}>
-                  <Icon name='user circle' />Log out
-                </Menu.Item>
-              ) : (
-                <Menu.Item name='login' active={activeItem === 'login'} onClick={() => this.handleMenuClick('/login')}>
-                  <Icon name='user circle' />Log in/Sign up
-                </Menu.Item>
-              )}
             </Menu.Menu>
           </Menu>
         </SemHeader>
@@ -72,42 +61,5 @@ class Header extends Component {
     );
   }
 }
-
-
-
-      // <Grid textAlign='center' columns={5}>
-      //   <Grid.Row>
-      //     <Grid.Column>
-      //       <Link to="/">
-      //         <Button style={{padding: '11px', backgroundColor: 'blue'}} fluid content='Home' icon='home' labelPosition='left' />
-      //       </Link>
-      //     </Grid.Column>
-      //     <Grid.Column>
-      //       <Link to="/shop">
-      //         <Button style={{padding: '11px', backgroundColor: 'blue'}} fluid content='Shop' icon='grid layout' labelPosition='left' />
-      //       </Link>
-      //     </Grid.Column>
-      //     <Grid.Column>
-      //       <Link to="/profile">
-      //         <Button style={{padding: '11px', backgroundColor: 'blue'}} fluid content='Profile' icon='user' labelPosition='left' />
-      //       </Link>
-      //     </Grid.Column>
-      //     <Grid.Column>
-      //       <Link to="/cart">
-      //         <Button style={{padding: '11px', backgroundColor: 'blue'}} fluid content='Cart' icon='cart' labelPosition='left' />
-      //       </Link>
-      //     </Grid.Column>
-      //     <Grid.Column>
-      //       {loggedIn ? (
-      //         <Button style={{padding: '11px', backgroundColor: 'blue'}} fluid onClick={logOut} content='Log out' icon='user circle' labelPosition='left' />
-      //       ) : (
-      //         <Link to="/login">
-      //           <Button style={{padding: '11px', backgroundColor: 'blue'}} fluid content='Log in/Sign up' icon='user circle' labelPosition='left' />
-      //         </Link>
-      //       )}
-      //     </Grid.Column>
-      //   </Grid.Row>
-      // </Grid>
-
 
 export default withRouter(Header);
