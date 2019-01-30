@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import { isEmpty } from 'lodash';
+import { List, Button } from 'semantic-ui-react'
 
 class LogIn extends Component {
   constructor(props) {
@@ -57,11 +58,11 @@ class LogIn extends Component {
       <div>
         <div>
           <ul>
-            <h3>Log In</h3>
-            {this.state.showUnsuccessful && (<p>unsuccessful log in attempt</p>)}
+            <h3>Sign In</h3>
+            {this.state.showUnsuccessful && (<p>unsuccessful sign in attempt</p>)}
             <li>username: <input type="text" name="username" value={this.state.logInUsername} onChange={this.handleLogInUsernameChange} /></li>
             <li>password: <input type="password" name="password" value={this.state.logInPassword} onChange={this.handleLogInPasswordChange} /></li>
-            <button onClick={this.logIn}>Log In</button>
+            <button onClick={this.logIn}>Sign In</button>
           </ul>
         </div>
         <div>
@@ -72,6 +73,15 @@ class LogIn extends Component {
             <button onClick={() => this.props.signUp(this.state.signUpUsername, this.state.signUpPassword)}>Sign Up</button>
           </ul>
         </div>
+        <List verticalAlign='middle'>
+          <List.Item>
+            <List.Content>
+              <List.Description>or try it out as a guest by clicking <Button basic color='red' onClick={() => this.props.logIn('guest', 'guest')}>here</Button> and using the info below</List.Description>
+              <List.Description>username: guest</List.Description>
+              <List.Description>password: guest</List.Description>
+            </List.Content>
+          </List.Item>
+        </List>
       </div>
     )
   }

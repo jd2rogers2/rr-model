@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { Header as SemHeader, Segment, Button, Icon, Image, Container, Grid } from 'semantic-ui-react'
 import { Grid, Image, Message, Placeholder } from 'semantic-ui-react'
 
 class Products extends Component {
@@ -43,7 +42,16 @@ class Products extends Component {
   render(){
     const { loading } = this.state;
     return this.props.products.length > 0 ? (
-      <div style={{display: 'inline-block', backgroundColor: '#F4F2E9', textAlign: 'center', position: 'relative', top: '15px'}}>
+      <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px'}}>
+        {this.props.filtered && (
+          <Message
+            floating
+            info
+            onDismiss={this.props.getAllProducts}
+            header={`Found ${this.props.products.length} matches`}
+            content='dismiss to clear search'
+          />
+        )}
         <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
           {this.props.products.map(product => {
             return (

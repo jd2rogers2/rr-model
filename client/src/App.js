@@ -16,7 +16,9 @@ class App extends Component {
     super(props);
     this.state = {
       user: {},
-      products: []
+      products: [],
+      filtered: false,
+      userInput: ''
     }
   }
 
@@ -25,6 +27,10 @@ class App extends Component {
     if (this.state.products.length === 0) {
       this.getAllProducts();
     }
+  }
+
+  handleSearchChange = event => {
+    this.setState({ userInput: event.target.value });
   }
 
   getAllProducts = () => {
@@ -36,12 +42,12 @@ class App extends Component {
         'Content-Type': 'application/json'
       }
     }).then(response => response.json()).then(data => {
-      this.setState({products: data});
+      this.setState({products: data, filtered: false, userInput: ''});
     });
   }
 
-  getFilteredProducts = userInput => {
-    const keyword = JSON.stringify({user_input: userInput});
+  getFilteredProducts = () => {
+    const keyword = JSON.stringify({user_input: this.state.userInput});
     fetch('/products/search',{
       accept: 'application/json',
       method: 'POST',
@@ -51,7 +57,7 @@ class App extends Component {
       body: keyword
     }).then(response => response.json()).then(data => {
       // if (data.length) { to do
-      this.setState({products: data});
+      this.setState({products: data, filtered: true});
     });
   }
 
@@ -93,20 +99,19 @@ class App extends Component {
   render() {
     const loggedIn = !isEmpty(this.state.user);
     return (
-      <div>
         <BrowserRouter>
-          <div style={{textAlign: 'center'}}>
-            <Header getFilteredProducts={this.getFilteredProducts} />
+          <div style={{backgroundImage: 'linear-gradient(to bottom, #f6ffff, #57899b)', textAlign: 'center'}}>
+            <Header userInput={this.state.userInput} handleSearchChange={this.handleSearchChange} getFilteredProducts={this.getFilteredProducts} loggedIn={loggedIn} logOut={this.logOut} />
             <Switch>
-              <Route path="/shop" render={props => <Products {...props} products={this.state.products} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
+              <Route path="/shop" render={props => <Products {...props} filtered={this.state.filtered} getAllProducts={this.getAllProducts} products={this.state.products} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
               <Route path="/profile" render={props => <User {...props} username={this.state.user.username} loggedIn={loggedIn} />} />
+              <Route path="/login" render={props => <LogIn {...props} loggedIn={loggedIn} logIn={this.logIn} signUp={this.signUp} />} />
               <Route path="/cart" render={props => <Cart {...props} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
               <Route path="/" render={props => <Home {...props} username={this.state.user.username} logOut={this.logOut} loggedIn={loggedIn} logIn={this.logIn} signUp={this.signUp} />} />
             </Switch>
+            <Footer />
           </div>
         </BrowserRouter>
-        <Footer />
-      </div>
     );
   }
 }

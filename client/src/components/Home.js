@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Segment, Grid, Divider, List, Button } from 'semantic-ui-react'
+import { Segment, Grid, Divider, List, Button, Image } from 'semantic-ui-react'
 import { isEmpty } from 'lodash';
 
 class Home extends Component {
@@ -47,77 +47,55 @@ class Home extends Component {
 
   render(){
     return (
-      <Segment>
-        <Grid columns={2}>
+      <Segment style={{background: 'none', height: '100vh', verticalAlign: 'middle', border: 0, boxShadow: 'none'}}>
+        <Divider hidden />
+        <Divider hidden />
+        <Grid columns={2} style={{fontSize: '1.5em'}}>
           <Grid.Column>
-            <List verticalAlign='middle' style={{fontSize: '1.5em'}}>
+            <List verticalAlign='middle'>
+              <List.Item>
+                <List.Content>
+                  <List.Header>
+                    To login and start clicking around
+                  </List.Header>
+                  <List.Description>Account > Sign up</List.Description>
+                  <List.Description>or click <Button basic color='red' onClick={() => this.props.logIn('guest', 'guest')}>here</Button> to use info below</List.Description>
+                  <List.Description>username: guest</List.Description>
+                  <List.Description>password: guest</List.Description>
+                </List.Content>
+              </List.Item>
+            </List>
+            <List verticalAlign='middle'>
               <List.Item>
                 <List.Content>
                   <List.Header>Welcome to my Rails and ReactJs portfolio site!</List.Header>
-                  <List.Description>Tech description</List.Description>
+                  <List.Description>
+                    This portfolio code sample shows my ability to work with <Image size='mini' spaced src={'https://i.pinimg.com/originals/f3/47/70/f34770503b90f26ea389f557500ff825.png'} /> plus <Image size='mini' spaced src={'https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png'} /> on the frontend and <Image size='mini' spaced src={'https://upload.wikimedia.org/wikipedia/commons/1/16/Ruby_on_Rails-logo.png'} /> as an api.
+                  </List.Description>
+                  <Divider hidden />
+                  <List.Description>
+                    source code: <a href="https://github.com/jd2rogers2/rr-model">https://github.com/jd2rogers2/rr-model</a>.
+                  </List.Description>
                 </List.Content>
               </List.Item>
+            </List>
+            <List verticalAlign='middle'>
               <List.Item>
-                <List.Item>
-                  To experience more of the functionality, please create a new user or login with the guest information below.
-                </List.Item>
-                <List.Item>
-                  Once logged in you will be able to:
-                </List.Item>
-                <List.Item>
-                  add to cart, search products by name, view cart, and view profile
-                </List.Item>
-                <List.Item>
-                  I hope to be adding additional functionality soon, such as:
-                </List.Item>
-                <List.Item>
-                  checking out a cart (mock), edit user info, product categories and filtering
-                </List.Item>
+                <List.Content>
+                  <List.Description>
+                    email: jd2rogers2@gmail.com
+                  </List.Description>
+                  <List.Description>
+                    linkedin: <a href="https://www.linkedin.com/in/jd2rogers2/">https://www.linkedin.com/in/jd2rogers2/</a>
+                  </List.Description>
+                </List.Content>
               </List.Item>
-              <List.Description>
-                You can find the source code at <a href="https://github.com/jd2rogers2/rr-model">https://github.com/jd2rogers2/rr-model</a>.
-              </List.Description>
             </List>
           </Grid.Column>
           <Grid.Column>
-            {this.props.loggedIn ? (
-              <div>
-                <p>welcome {this.props.username}</p>
-                <Button negative onClick={this.props.logOut}>Log out</Button>
-              </div>
-            ) : (
-              <div>
-                <div>
-                  <ul>
-                    <h3>Log In</h3>
-                    {this.state.showUnsuccessful && (<p>unsuccessful log in attempt</p>)}
-                    <li>username: <input type="text" name="username" value={this.state.logInUsername} onChange={this.handleLogInUsernameChange} /></li>
-                    <li>password: <input type="password" name="password" value={this.state.logInPassword} onChange={this.handleLogInPasswordChange} /></li>
-                    <button onClick={this.logIn}>Log In</button>
-                  </ul>
-                </div>
-                <div>
-                  <ul>
-                    <h3>Sign Up</h3>
-                    <li>username: <input type="text" name="username" value={this.state.signUpUsername} onChange={this.handleSignUpUsernameChange} /></li>
-                    <li>password: <input type="password" name="password" value={this.state.signUpPassword} onChange={this.handleSignUpPasswordChange} /></li>
-                    <button onClick={() => this.props.signUp(this.state.signUpUsername, this.state.signUpPassword)}>Sign Up</button>
-                  </ul>
-                </div>
-                <List verticalAlign='middle'>
-                  <List.Item>
-                    <List.Content style={{fontSize: '1.5em'}}>
-                      <List.Header>go to the log in page or click <button onClick={() => this.props.logIn('guest', 'guest')}>here</button> to login with the below info</List.Header>
-                      <List.Description>username: guest</List.Description>
-                      <List.Description>password: guest</List.Description>
-                    </List.Content>
-                  </List.Item>
-                </List>
-              </div>
-            )}
+            <Image fluid src="https://imgur.com/KteOtrD.png?1" title="source: imgur.com" />
           </Grid.Column>
         </Grid>
-        <Divider vertical clearing></Divider>
       </Segment>
     )
   }
