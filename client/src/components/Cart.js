@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import ProductCard from './ProductCard';
+import { Grid } from 'semantic-ui-react'
 import { Redirect } from "react-router-dom";
 
 class Cart extends Component {
@@ -6,11 +8,19 @@ class Cart extends Component {
     super(props);
 
     this.state = {
-      orderedProducts: []
+      orderedProducts: [],
+      loading: true
     }
   }
 
   componentDidMount() {
+    this._isMounted = true;
+
+    // until we can find a way to tell if image is loaded
+    setTimeout(() => {
+      this.setState({ loading: false })
+    }, 3000)
+
     if (!this.props.loggedIn) {
       return;
     }
@@ -22,8 +32,14 @@ class Cart extends Component {
         'Content-Type': 'application/json'
       }
     }).then(response => response.json()).then(data => {
-      this.setState({orderedProducts: data ? data.ordered_products : []});
+      if (this._isMounted) {
+        this.setState({orderedProducts: data ? data.ordered_products : []});
+      }
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   removeFromCart = productId => {
@@ -48,20 +64,21 @@ class Cart extends Component {
         }}
       />
     ) : (
-      <div>
-        <h1>cart page</h1>
-        <ul>
+      <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px'}}>
+        <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
           {this.state.orderedProducts.map(product => {
             return (
-              <li key={product.id}>
-                <img src={product.image} alt={product.name} />
-                <p>name: {product.name}</p>
-                <p>price: {product.price}</p>
-                <button onClick={() => this.removeFromCart(product.id)}>Remove from Cart</button>
-              </li>
+              <ProductCard
+                key={product.id}
+                product={product}
+                showAtc={false}
+                loggedIn={this.props.loggedIn}
+                loading={this.state.loading}
+                removeFromCart={this.removeFromCart}
+              />
             );
           })}
-        </ul>
+        </Grid>
         <p>total price: {this.state.orderedProducts.reduce((acc, current) => {
           return acc + current.price;
         }, 0)}</p>

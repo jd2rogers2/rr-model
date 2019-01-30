@@ -27,6 +27,21 @@ class App extends Component {
     if (this.state.products.length === 0) {
       this.getAllProducts();
     }
+    if (isEmpty(this.state.user)) {
+      this.getSessionUser();
+    }
+  }
+
+  getSessionUser = () => {
+    fetch('/sessions', {
+      accept: 'application/json',
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }).then(response => response.json()).then(data => {
+      this.setState({user: data});
+    });
   }
 
   handleSearchChange = event => {
@@ -61,8 +76,18 @@ class App extends Component {
     });
   }
 
+  // credentials: 'include'
+
   logOut = () => {
-    this.setState({user: {}});
+    fetch('/sessions', {
+        accept: 'application/json',
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    }).then(response => response.json()).then(data => {
+      this.setState({user: {}});
+    });
   }
 
   signUp = (username, password_digest) => {
@@ -83,7 +108,7 @@ class App extends Component {
   logIn = (username, password) => {
     const user = JSON.stringify({username, password});
 
-    return fetch('/users/login', {
+    return fetch('/sessions', {
         accept: 'application/json',
         method: 'POST',
         headers: {
@@ -100,7 +125,7 @@ class App extends Component {
     const loggedIn = !isEmpty(this.state.user);
     return (
         <BrowserRouter>
-          <div style={{backgroundImage: 'linear-gradient(to bottom, #f6ffff, #57899b)', textAlign: 'center'}}>
+          <div style={{backgroundImage: 'linear-gradient(to bottom, #f6ffff, #57899b)', textAlign: 'center', minHeight: '100vh'}}>
             <Header userInput={this.state.userInput} handleSearchChange={this.handleSearchChange} getFilteredProducts={this.getFilteredProducts} loggedIn={loggedIn} logOut={this.logOut} />
             <Switch>
               <Route path="/shop" render={props => <Products {...props} filtered={this.state.filtered} getAllProducts={this.getAllProducts} products={this.state.products} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />

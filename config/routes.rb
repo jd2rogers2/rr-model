@@ -1,11 +1,8 @@
 Rails.application.routes.draw do
+  resource :sessions, only: [:create, :destroy, :show]
   resources :ordered_products
   resources :carts
-  resources :users do
-    collection do
-      post 'login'
-    end
-  end
+  resources :users
   resources :products do
     post 'search', on: :collection
   end

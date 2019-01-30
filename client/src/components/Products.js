@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Grid, Image, Message, Placeholder } from 'semantic-ui-react'
+import ProductCard from './ProductCard';
+import { Grid, Message } from 'semantic-ui-react'
 
 class Products extends Component {
   constructor(props) {
@@ -40,7 +41,6 @@ class Products extends Component {
   }
 
   render(){
-    const { loading } = this.state;
     return this.props.products.length > 0 ? (
       <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px'}}>
         {this.props.filtered && (
@@ -55,32 +55,13 @@ class Products extends Component {
         <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
           {this.props.products.map(product => {
             return (
-              <div key={product.id} style={{paddingBottom: '10px'}}>
-                <Grid.Column>
-                  {loading ? (
-                    <Placeholder style={{ height: 298, width: 298 }}>
-                      <Placeholder.Image />
-                    </Placeholder>
-                  ) : (
-                    <Image
-                      src={product.image}
-                      centered
-                      size='medium'
-                      bordered
-                      alt={product.name}
-                    />
-                  )}
-                </Grid.Column>
-                <Message color='grey' attached='bottom'>
-                  <Message.Header>{product.name}</Message.Header>
-                  <p>${product.price}</p>
-                  {this.props.loggedIn ? (
-                    <button onClick={() => this.addToCart(product)}>Add to Cart</button>
-                  ) : (
-                    <span>log in to add to cart</span>
-                  )}
-                </Message>
-              </div>
+              <ProductCard
+                key={product.id}
+                product={product}
+                loggedIn={this.props.loggedIn}
+                addToCart={this.addToCart}
+                loading={this.state.loading}
+              />
             );
           })}
         </Grid>

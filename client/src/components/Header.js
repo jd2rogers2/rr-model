@@ -3,20 +3,12 @@ import { withRouter } from 'react-router-dom';
 import { Header as SemHeader, Icon, Menu, Form, Dropdown, Button } from 'semantic-ui-react'
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeItem: '/'
-    };
-  }
-
   handleMenuClick = pageName => {
-    this.setState({activeItem: pageName});
     this.props.history.push(pageName);
   }
 
   render(){
-    const { activeItem } = this.state;
+    const activeItem = this.props.history.location.pathname;
     return (
       <div style={{width: '95%', display: 'inline-block'}}>
         <SemHeader as='h3'>
@@ -43,7 +35,7 @@ class Header extends Component {
                   <Form.Input onChange={this.props.handleSearchChange} value={this.props.userInput} action={{ type: 'submit', icon: 'search' }} placeholder='Search...' />
                 </Form>
               </Menu.Item>
-              <Dropdown active={activeItem === '/profile' ? true : undefined} item icon={<span><Icon name='user' />Account</span>}>
+              <Dropdown active={activeItem === '/profile' ? 'true' : undefined} item icon={<span><Icon name='user' />Account</span>}>
                 <Dropdown.Menu>
                   {this.props.loggedIn ? (
                     <Dropdown.Item>

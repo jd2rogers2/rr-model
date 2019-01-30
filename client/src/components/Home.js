@@ -47,7 +47,7 @@ class Home extends Component {
 
   render(){
     return (
-      <Segment style={{background: 'none', height: '100vh', verticalAlign: 'middle', border: 0, boxShadow: 'none'}}>
+      <Segment style={{background: 'none', verticalAlign: 'middle', border: 0, boxShadow: 'none'}}>
         <Divider hidden />
         <Divider hidden />
         <Grid columns={2} style={{fontSize: '1.5em'}}>
