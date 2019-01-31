@@ -31,7 +31,7 @@ class Header extends Component {
 
             <Menu.Menu position='right'>
               <Menu.Item>
-                <Form onSubmit={this.props.getFilteredProducts}>
+                <Form onSubmit={this.props.setFiltered}>
                   <Form.Input onChange={this.props.handleSearchChange} value={this.props.userInput} action={{ type: 'submit', icon: 'search' }} placeholder='Search...' />
                 </Form>
               </Menu.Item>

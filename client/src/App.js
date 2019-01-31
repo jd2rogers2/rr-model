@@ -20,6 +20,11 @@ class App extends Component {
       filtered: false,
       userInput: ''
     }
+
+    // server session clearing on refresh :(
+    // if (window.performance && performance.navigation.type === 1 && isEmpty(this.state.user)) {
+    //   this.getSessionUser();
+    // }
   }
 
   componentDidMount() {
@@ -27,25 +32,25 @@ class App extends Component {
     if (this.state.products.length === 0) {
       this.getAllProducts();
     }
-    if (isEmpty(this.state.user)) {
-      this.getSessionUser();
-    }
   }
 
-  getSessionUser = () => {
-    fetch('/sessions', {
-      accept: 'application/json',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json()).then(data => {
-      this.setState({user: data});
-    });
-  }
+  // getSessionUser = () => {
+  //   fetch('/sessions', {
+  //     accept: 'application/json',
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }).then(response => response.json()).then(data => {
+  //     this.setState({user: data});
+  //   });
+  // }
 
   handleSearchChange = event => {
-    this.setState({ userInput: event.target.value });
+    this.setState({
+      userInput: event.target.value,
+      filtered: false
+    });
   }
 
   getAllProducts = () => {
@@ -61,19 +66,25 @@ class App extends Component {
     });
   }
 
+  setFiltered = () => {
+    this.setState({filtered: true});
+  }
+
   getFilteredProducts = () => {
-    const keyword = JSON.stringify({user_input: this.state.userInput});
-    fetch('/products/search',{
-      accept: 'application/json',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: keyword
-    }).then(response => response.json()).then(data => {
-      // if (data.length) { to do
-      this.setState({products: data, filtered: true});
-    });
+    return this.state.products.filter(product => product.name.includes(this.state.userInput));
+    // old server side filter
+    // const keyword = JSON.stringify({user_input: this.state.userInput});
+    // fetch('/products/search',{
+    //   accept: 'application/json',
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: keyword
+    // }).then(response => response.json()).then(data => {
+    //   // if (data.length) { to do
+    //   this.setState({products: data, filtered: true});
+    // });
   }
 
   // credentials: 'include'
@@ -126,9 +137,9 @@ class App extends Component {
     return (
         <BrowserRouter>
           <div style={{backgroundImage: 'linear-gradient(to bottom, #f6ffff, #57899b)', textAlign: 'center', minHeight: '100vh'}}>
-            <Header userInput={this.state.userInput} handleSearchChange={this.handleSearchChange} getFilteredProducts={this.getFilteredProducts} loggedIn={loggedIn} logOut={this.logOut} />
+            <Header userInput={this.state.userInput} handleSearchChange={this.handleSearchChange} setFiltered={this.setFiltered} loggedIn={loggedIn} logOut={this.logOut} />
             <Switch>
-              <Route path="/shop" render={props => <Products {...props} filtered={this.state.filtered} getAllProducts={this.getAllProducts} products={this.state.products} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
+              <Route path="/shop" render={props => <Products {...props} filtered={this.state.filtered} getAllProducts={this.getAllProducts} products={this.state.filtered ? this.getFilteredProducts() : this.state.products} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />
               <Route path="/profile" render={props => <User {...props} username={this.state.user.username} loggedIn={loggedIn} />} />
               <Route path="/login" render={props => <LogIn {...props} loggedIn={loggedIn} logIn={this.logIn} signUp={this.signUp} />} />
               <Route path="/cart" render={props => <Cart {...props} loggedIn={loggedIn} cartId={this.state.user && this.state.user.current_cart && this.state.user.current_cart.id} />} />

@@ -8,12 +8,6 @@ class ProductsController < ApplicationController
     render json: @products
   end
 
-  def search
-    @products = Product.filter_by_name(params[:user_input])
-
-    render json: @products
-  end
-
   # GET /products/1
   def show
     render json: @product
