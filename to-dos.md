@@ -1,6 +1,6 @@
 
 
-use redux
+clean up redux
 redux-persist
 
 sign in/up, edit page
