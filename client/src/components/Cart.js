@@ -8,7 +8,6 @@ class Cart extends Component {
     super(props);
 
     this.state = {
-      orderedProducts: [],
       loading: true
     }
   }
@@ -24,35 +23,10 @@ class Cart extends Component {
     if (!this.props.loggedIn) {
       return;
     }
-
-    fetch(`/carts/${this.props.cartId}`, {
-      accept: 'application/json',
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json()).then(data => {
-      if (this._isMounted) {
-        this.setState({orderedProducts: data ? data.ordered_products : []});
-      }
-    });
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-  }
-
-  removeFromCart = productId => {
-    fetch(`/ordered_products/${productId}`, {
-      accept: 'application/json',
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(response => response.json()).then(data => {
-      console.log(`${data.name} removed from cart with cart_id ${data.cart_id}`);
-      this.setState(prevState => ({...prevState, orderedProducts: prevState.orderedProducts.filter(prod => prod.id !== data.id)}));
-    });
   }
 
   render(){
@@ -64,9 +38,9 @@ class Cart extends Component {
         }}
       />
     ) : (
-      <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px'}}>
+      <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px', marginBottom: '75px'}}>
         <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
-          {this.state.orderedProducts.map(product => {
+          {Object.values(this.props.orderedProducts).map(product => {
             return (
               <ProductCard
                 key={product.id}
@@ -74,15 +48,16 @@ class Cart extends Component {
                 showAtc={false}
                 loggedIn={this.props.loggedIn}
                 loading={this.state.loading}
-                removeFromCart={this.removeFromCart}
+                removeFromCart={this.props.removeFromCart}
+                count={product.count}
               />
             );
           })}
         </Grid>
-        <p>total price: {this.state.orderedProducts.reduce((acc, current) => {
-          return acc + current.price;
+        <p>total price: {Object.values(this.props.orderedProducts).reduce((acc, current) => {
+          return acc + (current.price * current.count);
         }, 0)}</p>
-        {!this.state.orderedProducts.length && (<p>Your cart is empty.</p>)}
+        {!this.props.orderedProducts.length && (<p>Your cart is empty.</p>)}
       </div>
     )
   }

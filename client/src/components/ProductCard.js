@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Image, Message, Placeholder } from 'semantic-ui-react'
 
-const ProductCard = ({product, loggedIn, addToCart, loading, removeFromCart}) => (
+const ProductCard = ({product, loggedIn, addToCart, loading, removeFromCart, cartId, count}) => (
   <div style={{paddingBottom: '10px'}}>
     <Grid.Column>
       {loading ? (
@@ -20,15 +20,16 @@ const ProductCard = ({product, loggedIn, addToCart, loading, removeFromCart}) =>
     </Grid.Column>
     <Message color='grey' attached='bottom'>
       <Message.Header>{product.name}</Message.Header>
-      <p>${product.price}</p>
+      {count && (<p>quantity: {count}</p>)}
+      <p>${count ? product.price * count : product.price}</p>
       {loggedIn && addToCart && (
-        <button onClick={() => addToCart(product)}>Add to Cart</button>
+        <button onClick={() => addToCart(product, cartId)}>Add to Cart</button>
       )}
       {!loggedIn && addToCart && (
         <span>log in to add to cart</span>
       )}
       {loggedIn && removeFromCart && (
-        <button onClick={() => removeFromCart(product.id)}>Remove from Cart</button>
+        <button onClick={() => removeFromCart(product)}>Remove from Cart</button>
       )}
     </Message>
   </div>

@@ -16,6 +16,8 @@ class OrderedProductsController < ApplicationController
   # POST /ordered_products
   def create
     @ordered_product = OrderedProduct.new(ordered_product_params)
+    # @user = User.find_by(id: session[:user_id])
+    # @ordered_product.cart = @user.current_cart
     if @ordered_product.save
       render json: @ordered_product, status: :created, location: @ordered_product
     else

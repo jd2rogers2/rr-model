@@ -11,55 +11,41 @@ class Products extends Component {
   }
 
   componentDidMount() {
-    // get user's profile pages
-    // if not logged in show login page
-    // actually that can be abstracted to every page, can it be done server side?
-
     // until we can find a way to tell if image is loaded
     setTimeout(() => {
       this.setState({ loading: false })
     }, 3000)
   }
 
-  addToCart = ({name, price, image}) => {
-    const orderedProduct = JSON.stringify({ ordered_product: {name, price, image, cart_id: this.props.cartId} });
-
-    fetch('/ordered_products', {
-      accept: 'application/json',
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: orderedProduct
-    }).then(response => response.json()).then(data => {
-      console.log(`${data.name} added with cart_id ${data.cart_id}`);
-    });
-  }
-
   handleImageLoaded = () => {
     this.setState({loading: false});
   }
 
+  getFilteredProducts = () =>
+    this.props.products.filter(product => product.name.includes(this.props.userInput));
+
   render(){
-    return this.props.products.length > 0 ? (
+    const products = this.props.filtered ? this.getFilteredProducts() : this.props.products;
+    return products.length > 0 ? (
       <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px'}}>
         {this.props.filtered && (
           <Message
             floating
             info
             onDismiss={this.props.getAllProducts}
-            header={`Found ${this.props.products.length} matches`}
+            header={`Found ${products.length} matches`}
             content='dismiss to clear search'
           />
         )}
         <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
-          {this.props.products.map(product => {
+          {products.map(product => {
             return (
               <ProductCard
                 key={product.id}
                 product={product}
                 loggedIn={this.props.loggedIn}
-                addToCart={this.addToCart}
+                addToCart={this.props.addToCart}
+                cartId={this.props.cartId}
                 loading={this.state.loading}
               />
             );

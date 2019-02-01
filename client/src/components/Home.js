@@ -1,50 +1,7 @@
 import React, { Component } from 'react';
 import { Segment, Grid, Divider, List, Button, Image } from 'semantic-ui-react'
-import { isEmpty } from 'lodash';
 
 class Home extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      logInUsername: '',
-      logInPassword: '',
-      signUpUsername: '',
-      signUpPassword: '',
-      showUnsuccessful: false
-    }
-  }
-
-  componentDidMount() {}
-
-  handleLogInUsernameChange = event => {
-    this.setState({ logInUsername: event.target.value });
-  }
-
-  handleLogInPasswordChange = event => {
-    this.setState({ logInPassword: event.target.value });
-  }
-
-  handleSignUpUsernameChange = event => {
-    this.setState({ signUpUsername: event.target.value });
-  }
-
-  handleSignUpPasswordChange = event => {
-    this.setState({ signUpPassword: event.target.value });
-  }
-
-  logIn = () => {
-    this.props.logIn(this.state.logInUsername, this.state.logInPassword).then(response => {
-      if (isEmpty(response)) {
-        this.setState({
-          showUnsuccessful: true,
-          logInUsername: '',
-          logInPassword: ''
-        });
-      }
-    });
-  }
-
   render(){
     return (
       <Segment style={{background: 'none', verticalAlign: 'middle', border: 0, boxShadow: 'none'}}>
