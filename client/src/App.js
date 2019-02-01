@@ -23,7 +23,6 @@ class App extends Component {
   render() {
     const {
       addToCart,
-      fetchOrderedProductsByCartId,
       filtered,
       getAllProducts,
       handleSearchChange,
@@ -74,7 +73,6 @@ const mapDispatchToProps = dispatch => ({
   signUp: bindActionCreators(actions.signUp, dispatch),
   logIn: bindActionCreators(actions.logIn, dispatch),
   getAllProducts: bindActionCreators(actions.getAllProducts, dispatch),
-  fetchOrderedProductsByCartId: bindActionCreators(actions.fetchOrderedProductsByCartId, dispatch),
   removeFromCart: bindActionCreators(actions.removeFromCart, dispatch)
 });
 

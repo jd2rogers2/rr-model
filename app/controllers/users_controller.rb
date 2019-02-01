@@ -15,8 +15,9 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
-    Cart.create(user_id: @user.id)
+    binding.pry
+    @user = User.create(user_params)
+    @user.carts << Cart.create(user_id: @user.id)
 
     if @user.save
       session[:user_id] = @user.id
@@ -48,6 +49,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:username, :password_digest)
+      params.require(:user).permit(:username, :password)
     end
 end

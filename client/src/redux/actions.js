@@ -1,3 +1,5 @@
+import { isEmpty } from 'lodash';
+
 const handleSearchChange = event => ({
   type: 'HANDLE_SEARCH_CHANGE',
   payload: event && event.target && event.target.value
@@ -21,8 +23,8 @@ const logOut = () => {
   }
 };
 
-const signUp = (username, password_digest) => {
-  const user = JSON.stringify({username, password_digest});
+const signUp = (username, password) => {
+  const user = JSON.stringify({user: {username, password}});
   return dispatch => {
     return fetch('/users', {
       accept: 'application/json',
@@ -32,8 +34,11 @@ const signUp = (username, password_digest) => {
       },
       body: user
     }).then(response => response.json()).then(data => {
-      dispatch({type: 'SET_USER', payload: data});
-      dispatch(fetchOrderedProductsByCartId(data.current_cart.id));
+      if (!isEmpty(data) && !data.error && data.current_cart) {
+        dispatch({type: 'SET_USER', payload: data});
+        dispatch(fetchOrderedProductsByCartId(data.current_cart.id));
+      }
+      return data;
     });
   }
 };
@@ -49,8 +54,11 @@ const logIn = (username, password) => {
       },
       body: user
     }).then(response => response.json()).then(data => {
-      dispatch({type: 'SET_USER', payload: data})
-      dispatch(fetchOrderedProductsByCartId(data.current_cart.id));
+      if (!isEmpty(data) && !data.error && data.current_cart) {
+        dispatch({type: 'SET_USER', payload: data})
+        dispatch(fetchOrderedProductsByCartId(data.current_cart.id));
+      }
+      return data;
     });
   }
 };

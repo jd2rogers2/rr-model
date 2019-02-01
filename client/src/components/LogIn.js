@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from "react-router-dom";
 import { isEmpty } from 'lodash';
-import { List, Button } from 'semantic-ui-react'
+import { List, Button, Grid, Divider, Segment, Message, Form } from 'semantic-ui-react'
 
 class LogIn extends Component {
   constructor(props) {
@@ -46,6 +46,14 @@ class LogIn extends Component {
     });
   }
 
+  signUp = () => {
+    this.props.signUp(this.state.signUpUsername, this.state.signUpPassword);
+    this.setState({
+      signUpUsername: '',
+      signUpPassword: ''
+    });
+  }
+
   render(){
     return this.props.loggedIn ? (
       <Redirect
@@ -55,24 +63,41 @@ class LogIn extends Component {
         }}
       />
     ) : (
-      <div>
-        <div>
-          <ul>
+      <Segment style={{background: 'none', verticalAlign: 'middle', border: 0, boxShadow: 'none'}}>
+        <Divider hidden />
+        <Divider hidden />
+        <Grid centered columns={2} style={{fontSize: '1.5em', width: '75%', display: 'inline-block'}}>
+          <Grid.Column>
+            {this.state.showUnsuccessful && (<Message negative>unsuccessful sign in attempt</Message>)}
             <h3>Sign In</h3>
-            {this.state.showUnsuccessful && (<p>unsuccessful sign in attempt</p>)}
-            <li>username: <input type="text" name="username" value={this.state.logInUsername} onChange={this.handleLogInUsernameChange} /></li>
-            <li>password: <input type="password" name="password" value={this.state.logInPassword} onChange={this.handleLogInPasswordChange} /></li>
-            <button onClick={this.logIn}>Sign In</button>
-          </ul>
-        </div>
-        <div>
-          <ul>
+            <Form style={{textAlign: 'left'}}>
+              <Form.Field required>
+                <label>username:</label>
+                <input type="text" name="username" value={this.state.logInUsername} onChange={this.handleLogInUsernameChange} />
+              </Form.Field>
+              <Form.Field required>
+                <label>password:</label>
+                <input type="password" name="password" value={this.state.logInPassword} onChange={this.handleLogInPasswordChange} />
+              </Form.Field>
+              <Button onClick={this.logIn} type='submit'>Sign in</Button>
+            </Form>
+          </Grid.Column>
+          <Grid.Column>
             <h3>Sign Up</h3>
-            <li>username: <input type="text" name="username" value={this.state.signUpUsername} onChange={this.handleSignUpUsernameChange} /></li>
-            <li>password: <input type="password" name="password" value={this.state.signUpPassword} onChange={this.handleSignUpPasswordChange} /></li>
-            <button onClick={() => this.props.signUp(this.state.signUpUsername, this.state.signUpPassword)}>Sign Up</button>
-          </ul>
-        </div>
+            <Form style={{textAlign: 'left'}}>
+              <Form.Field required>
+                <label>username:</label>
+                <input type="text" name="username" value={this.state.signUpUsername} onChange={this.handleSignUpUsernameChange} />
+              </Form.Field>
+              <Form.Field required>
+                <label>password:</label>
+                <input type="password" name="password" value={this.state.signUpPassword} onChange={this.handleSignUpPasswordChange} />
+              </Form.Field>
+              <Button onClick={this.signUp} type='submit'>Sign up</Button>
+            </Form>
+          </Grid.Column>
+        </Grid>
+        <Divider hidden />
         <List verticalAlign='middle'>
           <List.Item>
             <List.Content>
@@ -82,7 +107,7 @@ class LogIn extends Component {
             </List.Content>
           </List.Item>
         </List>
-      </div>
+      </Segment>
     )
   }
 }

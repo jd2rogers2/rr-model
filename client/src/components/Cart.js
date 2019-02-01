@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ProductCard from './ProductCard';
-import { Grid } from 'semantic-ui-react'
+import { Grid, Message } from 'semantic-ui-react'
 import { Redirect } from "react-router-dom";
 
 class Cart extends Component {
@@ -29,7 +29,14 @@ class Cart extends Component {
     this._isMounted = false;
   }
 
+  getTotal = arr =>
+    arr.reduce((acc, current) =>
+      acc + (current.price * current.count), 0)
+
+
   render(){
+    const productArray = Object.values(this.props.orderedProducts);
+    const totalPrice = this.getTotal(productArray);
     return !this.props.loggedIn ? (
       <Redirect
         to={{
@@ -40,7 +47,7 @@ class Cart extends Component {
     ) : (
       <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px', marginBottom: '75px'}}>
         <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
-          {Object.values(this.props.orderedProducts).map(product => {
+          {productArray.map(product => {
             return (
               <ProductCard
                 key={product.id}
@@ -54,10 +61,10 @@ class Cart extends Component {
             );
           })}
         </Grid>
-        <p>total price: {Object.values(this.props.orderedProducts).reduce((acc, current) => {
-          return acc + (current.price * current.count);
-        }, 0)}</p>
-        {!this.props.orderedProducts.length && (<p>Your cart is empty.</p>)}
+        <Message info header={`total price: $${totalPrice}`} style={{width: '70%', display: 'inline-block'}} />
+        {!productArray.length && (
+          <Message info header='Your cart is empty.' />
+        )}
       </div>
     )
   }
