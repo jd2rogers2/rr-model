@@ -44,7 +44,7 @@ const signUp = (username, password) => {
 };
 
 const logIn = (username, password) => {
-  const user = JSON.stringify({username, password});
+  const user = JSON.stringify({session: {username, password}});
   return dispatch => {
     return fetch('/sessions', {
       accept: 'application/json',

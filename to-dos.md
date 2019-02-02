@@ -1,7 +1,6 @@
 
 
-sign in/up, edit page
-even better home page
+image overlaying header buttons :(
 
 notes
 foreman start -p 3000

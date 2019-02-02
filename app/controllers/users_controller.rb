@@ -15,7 +15,6 @@ class UsersController < ApplicationController
 
   # POST /users
   def create
-    binding.pry
     @user = User.create(user_params)
     @user.carts << Cart.create(user_id: @user.id)
 

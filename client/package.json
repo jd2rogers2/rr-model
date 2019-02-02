@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3001/",
   "dependencies": {
     "react": "^16.6.1",
+    "react-animated-slider": "^1.1.4",
     "react-dom": "^16.6.1",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
