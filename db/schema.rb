@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2018_11_12_120711) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "carts", force: :cascade do |t|
     t.integer "user_id"
     t.boolean "submitted"
