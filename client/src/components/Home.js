@@ -5,10 +5,8 @@ import 'react-animated-slider/build/horizontal.css';
 
 const content = [
   {imageNode: (<Image src="https://vcdn.adnxs.com/p/creative-image/ea/d3/91/08/ead39108-2eb3-4205-9b52-2e6887b1837b.jpg" fluid style={{position: 'inherit', zIndex: '1'}}/>)},
-  {imageNode: (<Image src="http://omicrongranite.net/wp-content/uploads/2013/12/callacattasupremehoned-detail.jpg" fluid style={{position: 'fixed', zIndex: '1', top: '0px', maxHeight: '1300px'}}/>), subNode: (
-    <div style={{position: 'fixed', zIndex: '2', top: '120px', width: '100%'}}>
-      <Divider hidden />
-      <Divider hidden />
+  {imageNode: (<Image src="http://emkath.org/wp-content/uploads/2015/12/3-1000x600.jpg" fluid style={{position: 'fixed', zIndex: '1', top: '100px', maxHeight: '1300px'}}/>), subNode: (
+    <div style={{position: 'fixed', zIndex: '2', top: '140px', width: '100%', fontSize: '1.6em', background: 'rgba(255, 255, 255, 0.75)'}}>
       <List verticalAlign='middle'>
         <List.Item>
           <List.Content>
@@ -20,12 +18,11 @@ const content = [
                on the frontend and <Image size='mini' spaced src={'https://upload.wikimedia.org/wikipedia/commons/1/16/Ruby_on_Rails-logo.png'} /> as an api.
             </List.Description>
             <List.Description>
-              source code: <a href="https://github.com/jd2rogers2/rr-model">https://github.com/jd2rogers2/rr-model</a>.
+              source code: <a href="https://github.com/jd2rogers2/rr-model">https://github.com/jd2rogers2/rr-model</a>
             </List.Description>
           </List.Content>
         </List.Item>
       </List>
-      <Divider hidden />
       <List verticalAlign='middle'>
         <List.Item>
           <List.Content>
@@ -39,7 +36,6 @@ const content = [
           </List.Content>
         </List.Item>
       </List>
-      <Divider hidden />
       <List verticalAlign='middle'>
         <List.Item>
           <List.Content>
