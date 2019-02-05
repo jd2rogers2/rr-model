@@ -19,9 +19,13 @@ heroku run rails console --app="rr-ecommerce"
 
 "build": "bundle exec rails s -p 3001 && cd client && npm start",
 
-old procfile
+foreman procfile
 web: cd client && npm start
 api: bundle exec rails s -p 3001
+
+heroku
+web: bundle exec rails s
+release: bin/rake db:migrate
 
 
 Adding a Stylesheet
