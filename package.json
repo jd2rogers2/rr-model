@@ -1,0 +1,13 @@
+{
+  "name": "rr-ecommerce",
+  "license": "MIT",
+  "engines": {
+    "node": "8.9.4",
+    "npm": "3.10.10"
+  },
+  "scripts": {
+    "build": "npm build client",
+    "deploy": "cp -a client/build/. public/",
+    "heroku-postbuild": "npm build && npm deploy"
+  }
+}
