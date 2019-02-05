@@ -5,9 +5,9 @@
     "node": "8.9.4",
     "npm": "3.10.10"
   },
-  "scripts": {
-    "build": "npm build client",
-    "deploy": "cp -a client/ public/",
-    "heroku-postbuild": "npm run-script build && npm run-script deploy"
-  }
+"scripts": {
+  "build": "cd client && npm install && npm run build && cd ..",
+  "deploy": "cp -a client/ public/",
+  "postinstall": "npm run build && npm run deploy && echo 'Client built!'"
+}
 }

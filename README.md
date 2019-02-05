@@ -1,24 +1,9 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+this is a generic ecommerce app meant for my portfolio to display my knowledge of the following concepts:
 
-Things you may want to cover:
+writing a rails api
+rendering json
+mvc structure
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+tbc
