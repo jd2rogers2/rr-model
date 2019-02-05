@@ -13,7 +13,7 @@ pagination for more products
 
 
 notes
-foreman start -p 3000
+foreman start -p 3000 -f Procfile.dev
 heroku run rails console --app="rr-ecommerce"
 
 
