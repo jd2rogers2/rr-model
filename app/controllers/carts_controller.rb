@@ -1,5 +1,3 @@
-require 'pry'
-
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :update, :destroy]
 

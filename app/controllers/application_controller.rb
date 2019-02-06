@@ -1,5 +1,3 @@
-require 'pry'
-
 class ApplicationController < ActionController::Base
   def fallback_index_html
     render :file => 'public/public/index.html'
