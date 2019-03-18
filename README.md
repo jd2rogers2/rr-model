@@ -1,6 +1,6 @@
 # README
 
-https://rr-ecommerce.heroku.com
+https://rr-ecommerce.herokuapp.com/
 
 this is a generic ecommerce app meant for my portfolio to display my knowledge of the following concepts:
 
