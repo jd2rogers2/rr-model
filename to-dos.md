@@ -1,11 +1,7 @@
-check article's github
-look for other examples
-start from scratch using article's steps and then import my files along the way
-
-config/environments/production.rb force_ssl = true uncomment?
 
 to dos
 readme
+# of items in cart in nav bar
 clean up css (see below)
 edit user info
 checkout
