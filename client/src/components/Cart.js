@@ -31,12 +31,20 @@ class Cart extends Component {
 
   getTotal = arr =>
     arr.reduce((acc, current) =>
-      acc + (current.price * current.count), 0)
+      acc + current.price, 0)
 
 
   render(){
-    const productArray = Object.values(this.props.orderedProducts);
-    const totalPrice = this.getTotal(productArray);
+    const consolidated = this.props.orderedProducts.reduce((acc, curr) => {
+      let temp = acc.find(prod => prod.name === curr.name);
+      if (temp) {
+        temp.count += 1;
+      } else {
+        acc.push({...curr, count: 1})
+      }
+      return acc;
+    }, []);
+    const totalPrice = this.getTotal(this.props.orderedProducts);
     return !this.props.loggedIn ? (
       <Redirect
         to={{
@@ -47,7 +55,7 @@ class Cart extends Component {
     ) : (
       <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px', marginBottom: '75px'}}>
         <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
-          {productArray.map(product => {
+          {consolidated.map(product => {
             return (
               <ProductCard
                 key={product.id}
@@ -62,7 +70,7 @@ class Cart extends Component {
           })}
         </Grid>
         <Message info header={`total price: $${totalPrice}`} style={{width: '70%', display: 'inline-block'}} />
-        {!productArray.length && (
+        {!consolidated.length && (
           <Message info header='Your cart is empty.' />
         )}
       </div>

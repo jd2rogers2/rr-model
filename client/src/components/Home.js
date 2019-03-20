@@ -5,7 +5,8 @@ import 'react-animated-slider/build/horizontal.css';
 
 const content = [
   {imageNode: (<Image src="https://vcdn.adnxs.com/p/creative-image/ea/d3/91/08/ead39108-2eb3-4205-9b52-2e6887b1837b.jpg" fluid style={{position: 'inherit', zIndex: '1'}}/>)},
-  {imageNode: (<Image src="http://emkath.org/wp-content/uploads/2015/12/3-1000x600.jpg" fluid style={{position: 'fixed', zIndex: '1', top: '100px', maxHeight: '1300px'}}/>), subNode: (
+  {imageNode: (<Image src="http://emkath.org/wp-content/uploads/2015/12/3-1000x600.jpg" fluid style={{position: 'fixed', zIndex: '1', top: '100px', maxHeight: '1300px'}}/>),
+   subNode: logIn => (
     <div style={{position: 'fixed', zIndex: '2', top: '140px', width: '100%', fontSize: '1.6em', background: 'rgba(255, 255, 255, 0.75)'}}>
       <List verticalAlign='middle'>
         <List.Item>
@@ -27,10 +28,10 @@ const content = [
         <List.Item>
           <List.Content>
             <List.Header>
-              To login and start clicking around
+              To log in and start clicking around
             </List.Header>
             <List.Description>Account > Sign up</List.Description>
-            <List.Description>or click <Button basic color='red' onClick={() => this.props.logIn('guest', 'guest')}>here</Button> to use info below</List.Description>
+            <List.Description>or click <Button basic color='red' onClick={() => logIn('guest', 'guest')}>here</Button> to use info below</List.Description>
             <List.Description>username: guest</List.Description>
             <List.Description>password: guest</List.Description>
           </List.Content>
@@ -61,7 +62,7 @@ class Home extends Component {
           {content.map((slide, index) => (
             <div key={index} style={{position: 'relative', zIndex: '0'}}>
               {slide.imageNode}
-              {slide.subNode}
+              {slide.subNode && slide.subNode(this.props.logIn)}
             </div>
           ))}
         </Slider>

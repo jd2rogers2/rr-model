@@ -16,7 +16,8 @@ const logOut = () => {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'same-origin'
     }).then(response => response.json()).then(data => {
       dispatch({type: 'LOG_OUT'});
     });
@@ -32,7 +33,8 @@ const signUp = (username, password) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: user
+      body: user,
+      credentials: 'same-origin'
     }).then(response => response.json()).then(data => {
       if (!isEmpty(data) && !data.error && data.current_cart) {
         dispatch({type: 'SET_USER', payload: data});
@@ -52,7 +54,8 @@ const logIn = (username, password) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: user
+      body: user,
+      credentials: 'same-origin'
     }).then(response => response.json()).then(data => {
       if (!isEmpty(data) && !data.error && data.current_cart) {
         dispatch({type: 'SET_USER', payload: data})
@@ -71,7 +74,8 @@ const getAllProducts = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'same-origin'
     }).then(response => response.json()).then(data => {
       dispatch({type: 'SET_PRODUCTS', payload: data});
     });
@@ -85,23 +89,25 @@ const fetchOrderedProductsByCartId = id => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'same-origin'
     }).then(response => response.json()).then(data => {
       dispatch({type: 'SET_ORDERED_PRODUCTS', payload: data ? data.ordered_products : []});
     });
   }
 };
 
-const removeFromCart = productId => {
+const removeFromCart = product => {
   return dispatch => {
-    return fetch(`/ordered_products/${productId}`, {
+    return fetch(`/ordered_products/${product.id}`, {
       accept: 'application/json',
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'same-origin'
     }).then(response => response.json()).then(data => {
-      dispatch({type: 'DELETE_ORDERED_PRODUCT', payload: productId});
+      dispatch({type: 'DELETE_ORDERED_PRODUCT', payload: product});
       console.log(`${data.name} removed from cart with cart_id ${data.cart_id}`);
     });
   }
@@ -116,7 +122,8 @@ const addToCart = (product, cartId) => {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: orderedProduct
+      body: orderedProduct,
+      credentials: 'same-origin'
     }).then(response => response.json()).then(data => {
       dispatch({type: 'ADD_TO_CART', payload: data});
       console.log(`${data.name} added with cart_id ${data.cart_id}`);

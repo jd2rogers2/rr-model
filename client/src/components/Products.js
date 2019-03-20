@@ -28,34 +28,37 @@ class Products extends Component {
 
   render(){
     const products = this.props.filtered ? this.getFilteredProducts() : this.props.products;
-    return products.length > 0 ? (
-      <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px'}}>
-        {this.props.filtered && (
-          <Message
-            floating
-            info
-            onDismiss={this.props.getAllProducts}
-            header={`Found ${products.length} matches`}
-            content='dismiss to clear search'
-          />
-        )}
-        <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
-          {products.map(product => {
-            return (
-              <ProductCard
-                key={product.id}
-                product={product}
-                loggedIn={this.props.loggedIn}
-                addToCart={this.props.addToCart}
-                cartId={this.props.cartId}
-                loading={this.state.loading}
+    return (
+      <div>
+        {products.length > 0 && (
+          <div style={{display: 'inline-block', background: 'none', textAlign: 'center', position: 'relative', top: '15px'}}>
+            {this.props.filtered && (
+              <Message
+                floating
+                info
+                onDismiss={this.props.getAllProducts}
+                header={`Found ${products.length} matches`}
+                content='dismiss to clear search'
               />
-            );
-          })}
-        </Grid>
+            )}
+            <Grid style={{paddingBottom: '50px', width: '95%', display: 'inline-flex', position: 'relative', top: '20px'}} textAlign='center' columns={3}>
+              {products.map(product => {
+                return (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    loggedIn={this.props.loggedIn}
+                    addToCart={this.props.addToCart}
+                    cartId={this.props.cartId}
+                    loading={this.state.loading}
+                  />
+                );
+              })}
+            </Grid>
+          </div>
+        )}
+        {products.length < 1 && !this.state.loading && (<p>no products found</p>)}
       </div>
-    ) : (
-      <p>no products found</p>
     )
   }
 }

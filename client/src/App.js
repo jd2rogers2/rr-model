@@ -37,7 +37,7 @@ class App extends Component {
     return (
         <BrowserRouter>
           <div style={{backgroundImage: 'linear-gradient(to bottom, #f6ffff, #57899b)', textAlign: 'center', minHeight: '100vh'}}>
-            <Header style={{zIndex: 20}} userInput={this.props.userInput} handleSearchChange={handleSearchChange} setFiltered={setFiltered} loggedIn={loggedIn} logOut={logOut} />
+            <Header style={{zIndex: 20}} userInput={this.props.userInput} handleSearchChange={handleSearchChange} setFiltered={setFiltered} loggedIn={loggedIn} logOut={logOut} orderedProducts={orderedProducts} />
             <Switch>
               <Route path="/shop" render={props => <Products {...props} addToCart={addToCart} filtered={filtered} userInput={userInput} getAllProducts={getAllProducts} products={products} loggedIn={loggedIn} cartId={cartId} />} />
               <Route path="/profile" render={props => <User {...props} username={user.username} loggedIn={loggedIn} />} />

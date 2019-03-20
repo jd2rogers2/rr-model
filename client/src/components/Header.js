@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
-import { Header as SemHeader, Icon, Menu, Form, Dropdown, Button } from 'semantic-ui-react'
+import { Header as SemHeader, Icon, Menu, Form, Dropdown, Button, Label } from 'semantic-ui-react'
 
 class Header extends Component {
   handleMenuClick = pageName => {
@@ -25,7 +25,9 @@ class Header extends Component {
 
             {this.props.loggedIn && (
               <Menu.Item name='/cart' active={activeItem === '/cart' ? true : undefined} onClick={() => this.handleMenuClick('/cart')}>
-                <Icon name='cart' />Cart
+                <Icon name='cart' />
+                Cart
+                <Label color='teal' circular floating>{this.props.orderedProducts.length}</Label>
               </Menu.Item>
             )}
 
