@@ -16,10 +16,6 @@ import { isEmpty } from 'lodash';
 import 'semantic-ui-css/semantic.min.css';
 
 class App extends Component {
-  componentDidMount() {
-    this.props.getAllProducts();
-  }
-
   render() {
     const {
       addToCart,

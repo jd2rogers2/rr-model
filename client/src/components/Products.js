@@ -11,6 +11,8 @@ class Products extends Component {
   }
 
   componentDidMount() {
+    this.props.getAllProducts();
+
     // until we can find a way to tell if image is loaded
     setTimeout(() => {
       this.setState({ loading: false })
